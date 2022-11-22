@@ -1,5 +1,13 @@
 pipeline {
 	agent any
+	parameters {
+	    string(name: 'VERSION', defaultValue: '', description: 'Version to be deployed on prod.')
+	    choice(name: 'VERSION1', choices: ['1', '2', '3'], description: 'Version to be deployed on prod.')
+	    booleanParam(name: 'executeTests', defaultValue: false, description: 'Executes tests or not.')
+	}
+	tools {
+	    Maven 'maven'
+	}
 	environment {
         NEW_VERSION = '1.3.0'
         GITHUB_CREDENTIALS = credentials('github_credentials')
@@ -23,7 +31,7 @@ pipeline {
 		stage("test") {
             when {
                 expression {
-                    BRANCH_NAME != 'main'
+                    ${executeTests}
                 }
             }
 			steps{
@@ -50,12 +58,12 @@ pipeline {
 		}
 
 	}
-		post {
-			always {
-                echo "Executing the POST BUILD STEP."
-			} 
-			failure {
-			    echo "Executing the POST BUILD STEP on Failure."
-			}
-		}
+    post {
+        always {
+            echo "Executing the POST BUILD STEP."
+        }
+        failure {
+            echo "Executing the POST BUILD STEP on Failure."
+        }
+    }
 }
