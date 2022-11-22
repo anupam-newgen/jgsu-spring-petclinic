@@ -27,5 +27,14 @@ pipeline {
 				echo "deploying out the code"
 			}
 		}
+
 	}
+		post {
+			always {
+                echo "Executing the POST BUILD STEP."
+			} 
+			failure {
+			    echo "Executing the POST BUILD STEP on Failure."
+			}
+		}
 }
