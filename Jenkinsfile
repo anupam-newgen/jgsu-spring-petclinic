@@ -5,9 +5,9 @@ pipeline {
 	    choice(name: 'VERSION1', choices: ['1', '2', '3'], description: 'Version to be deployed on prod.')
 	    booleanParam(name: 'executeTests', defaultValue: false, description: 'Executes tests or not.')
 	}
-	tools {
-	    Maven 'maven'
-	}
+	//tools {
+	//    Maven 'maven'
+	//}
 	environment {
         NEW_VERSION = '1.3.0'
         GITHUB_CREDENTIALS = credentials('github_credentials')
