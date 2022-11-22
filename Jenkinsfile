@@ -32,8 +32,20 @@ pipeline {
 		}
 		
 		stage ("deploy") {
+
 			steps{
-				echo "deploying out the code"
+                echo "deploying out the code"
+                withCredentials([
+                    usernamePassword(
+                        credentials : "SERVER_CREDENTIALS",
+                        usernameVariable: USER,
+                        passwordVariable: PWD)
+                ]) {
+                    echo "${USER}"
+                	echo "${PWD}"
+                }
+
+
 			}
 		}
 
