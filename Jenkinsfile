@@ -1,11 +1,14 @@
 pipeline {
 	agent any
-	
+	environment {
+        NEW_VERSION = '1.3.0'
+        GITHUB_CREDENTIALS = credentials('github_credentials')
+	}
 	stages {
 		
 		stage("checkout") {
 			steps{
-				echo "checking out the code"
+				echo "checking out the code ${GITHUB_CREDENTIALS}"
 			}
 			
 		}
@@ -13,6 +16,7 @@ pipeline {
 		stage("build") {
 			steps{
 				echo "building out the code"
+				echo "building version ${NEW_VERSION}"
 			}
 		}
 		
